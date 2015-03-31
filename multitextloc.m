@@ -11,13 +11,18 @@ function varargout = multitextloc(ax, str, pos, varargin)
 %
 %   ax:     array of axes handles
 %
-%   str:    cell array of strings, same size as ax
+%   str:    cell array of strings, same size as ax, or single string to be
+%           applied to all axes.
 %
 %   pos:    location string or 1 x 2 cell array of {locstr,buffer}, see
 %           textLoc for details
 
 if ~isequal(numel(ax), numel(str))
-    error('axis handles and labels must be same size');
+    if ischar(str)
+        str = repmat({str}, size(ax));
+    else
+        error('axis handles and labels must be same size');
+    end
 end
 
 for ii = 1:numel(ax)
